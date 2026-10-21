@@ -1,0 +1,752 @@
+{
+  "_instrucciones": [
+    "Set de evaluación de la tesis: 4 WebMaps (Reportes ciudadanos, Accidentes de tránsito DMQ, Riesgos, Parques Nacionales Ecuador) + preguntas entre mapas.",
+    "'referencia' calcula la respuesta correcta EN VIVO con la herramienta indicada (la verdad siempre coincide con los datos actuales de AGOL); 'clave' es la ruta dentro del JSON que devuelve.",
+    "'respuesta_contiene' es la alternativa fija: textos que deben aparecer en la respuesta.",
+    "Las preguntas con 'REEMPLAZAR' se omiten hasta completar el dato (nombre real del campo).",
+    "Categorías espacial_*: las resuelve el SpatialAgent. conteo, distribucion, ranking y mapa son el grupo de control (una sola capa).",
+    "'_geocodificar' en args: la referencia obtiene lon/lat con el mismo geocodificador del agente (ArcGIS World Geocoder)."
+  ],
+  "preguntas": [
+    {
+      "id": "rep-01",
+      "mapa": "rep",
+      "categoria": "espacial_conteo",
+      "pregunta": "¿Qué parroquia tiene más denuncias ciudadanas?",
+      "webmap_id": "ea9ca4a0c79f4bff8863069c266ccbf2",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_in_polygons"
+      ],
+      "referencia": {
+        "herramienta": "count_points_in_polygons",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/service_ef0c0ccbb59144dcb9c607ef4f11c8ec/FeatureServer/0",
+          "polygons_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "points_where": "intencion_bert = 'denuncia'"
+        },
+        "clave": "ranking.0.nombre"
+      }
+    },
+    {
+      "id": "rep-02",
+      "mapa": "rep",
+      "categoria": "espacial_conteo",
+      "pregunta": "¿Cuántos reportes ciudadanos hay en la parroquia Quitumbe?",
+      "webmap_id": "ea9ca4a0c79f4bff8863069c266ccbf2",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_in_polygons"
+      ],
+      "referencia": {
+        "herramienta": "count_points_in_polygons",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/service_ef0c0ccbb59144dcb9c607ef4f11c8ec/FeatureServer/0",
+          "polygons_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "polygon_name": "Quitumbe"
+        },
+        "clave": "ranking.0.conteo"
+      }
+    },
+    {
+      "id": "rep-03",
+      "mapa": "rep",
+      "categoria": "espacial_conteo",
+      "pregunta": "¿En qué parroquia se concentran los reportes de basura?",
+      "webmap_id": "ea9ca4a0c79f4bff8863069c266ccbf2",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_in_polygons"
+      ],
+      "referencia": {
+        "herramienta": "count_points_in_polygons",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/service_ef0c0ccbb59144dcb9c607ef4f11c8ec/FeatureServer/0",
+          "polygons_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "points_where": "categoria = 'basura'"
+        },
+        "clave": "ranking.0.nombre"
+      }
+    },
+    {
+      "id": "rep-04",
+      "mapa": "rep",
+      "categoria": "espacial_conteo",
+      "pregunta": "¿Qué parroquia tiene más reportes de alcantarillado?",
+      "webmap_id": "ea9ca4a0c79f4bff8863069c266ccbf2",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_in_polygons"
+      ],
+      "referencia": {
+        "herramienta": "count_points_in_polygons",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/service_ef0c0ccbb59144dcb9c607ef4f11c8ec/FeatureServer/0",
+          "polygons_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "points_where": "categoria = 'alcantarillado'"
+        },
+        "clave": "ranking.0.nombre"
+      }
+    },
+    {
+      "id": "rep-05",
+      "mapa": "rep",
+      "categoria": "espacial_conteo",
+      "pregunta": "¿Cuántas quejas se registraron en Chimbacalle?",
+      "webmap_id": "ea9ca4a0c79f4bff8863069c266ccbf2",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_in_polygons"
+      ],
+      "referencia": {
+        "herramienta": "count_points_in_polygons",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/service_ef0c0ccbb59144dcb9c607ef4f11c8ec/FeatureServer/0",
+          "polygons_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "points_where": "intencion_bert = 'queja'",
+          "polygon_name": "Chimbacalle"
+        },
+        "clave": "ranking.0.conteo"
+      }
+    },
+    {
+      "id": "rep-06",
+      "mapa": "rep",
+      "categoria": "espacial_conteo",
+      "pregunta": "¿Desde qué parroquia llegan más agradecimientos?",
+      "webmap_id": "ea9ca4a0c79f4bff8863069c266ccbf2",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_in_polygons"
+      ],
+      "referencia": {
+        "herramienta": "count_points_in_polygons",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/service_ef0c0ccbb59144dcb9c607ef4f11c8ec/FeatureServer/0",
+          "polygons_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "points_where": "intencion_bert = 'agradecimiento'"
+        },
+        "clave": "ranking.0.nombre"
+      }
+    },
+    {
+      "id": "rep-07",
+      "mapa": "rep",
+      "categoria": "espacial_conteo",
+      "pregunta": "¿Cuántos reportes de seguridad hay en La Concepción?",
+      "webmap_id": "ea9ca4a0c79f4bff8863069c266ccbf2",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_in_polygons"
+      ],
+      "referencia": {
+        "herramienta": "count_points_in_polygons",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/service_ef0c0ccbb59144dcb9c607ef4f11c8ec/FeatureServer/0",
+          "polygons_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "points_where": "categoria = 'seguridad'",
+          "polygon_name": "Concepcion"
+        },
+        "clave": "ranking.0.conteo"
+      }
+    },
+    {
+      "id": "rep-08",
+      "mapa": "rep",
+      "categoria": "espacial_conteo",
+      "pregunta": "¿Cuántos reportes ciudadanos quedan fuera de las parroquias del DMQ?",
+      "webmap_id": "ea9ca4a0c79f4bff8863069c266ccbf2",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_in_polygons"
+      ],
+      "referencia": {
+        "herramienta": "count_points_in_polygons",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/service_ef0c0ccbb59144dcb9c607ef4f11c8ec/FeatureServer/0",
+          "polygons_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2"
+        },
+        "clave": "puntos_fuera"
+      }
+    },
+    {
+      "id": "rep-09",
+      "mapa": "rep",
+      "categoria": "distribucion",
+      "pregunta": "¿Cuál es la intención más frecuente en los reportes ciudadanos?",
+      "webmap_id": "ea9ca4a0c79f4bff8863069c266ccbf2",
+      "agente_esperado": "AnalyticsAgent",
+      "herramientas_esperadas": [
+        "count_by_category"
+      ],
+      "referencia": {
+        "herramienta": "count_by_category",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/service_ef0c0ccbb59144dcb9c607ef4f11c8ec/FeatureServer/0",
+          "field_name": "intencion_bert"
+        },
+        "clave": "categorias.0.categoria"
+      }
+    },
+    {
+      "id": "rep-10",
+      "mapa": "rep",
+      "categoria": "conteo",
+      "pregunta": "¿Cuántos reportes de gravedad alta hay?",
+      "webmap_id": "ea9ca4a0c79f4bff8863069c266ccbf2",
+      "referencia": {
+        "herramienta": "count_features",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/service_ef0c0ccbb59144dcb9c607ef4f11c8ec/FeatureServer/0",
+          "where": "gravedad = 'alta'"
+        },
+        "clave": "total"
+      }
+    },
+    {
+      "id": "rep-11",
+      "mapa": "rep",
+      "categoria": "mapa",
+      "pregunta": "¿Qué capas tiene este mapa?",
+      "webmap_id": "ea9ca4a0c79f4bff8863069c266ccbf2",
+      "agente_esperado": "RAGAgent",
+      "respuesta_contiene": [
+        "Parroquias",
+        "Reportes"
+      ]
+    },
+    {
+      "id": "acc-01",
+      "mapa": "acc",
+      "categoria": "espacial_conteo",
+      "pregunta": "¿Qué parroquia tiene más accidentes de tránsito?",
+      "webmap_id": "802a5727dc3e4d85922e1774483261ae",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_in_polygons"
+      ],
+      "referencia": {
+        "herramienta": "count_points_in_polygons",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Accidentes_de_Tránsito/FeatureServer/0",
+          "polygons_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2"
+        },
+        "clave": "ranking.0.nombre"
+      }
+    },
+    {
+      "id": "acc-02",
+      "mapa": "acc",
+      "categoria": "espacial_conteo",
+      "pregunta": "¿Cuántos accidentes de tránsito hubo en Iñaquito?",
+      "webmap_id": "802a5727dc3e4d85922e1774483261ae",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_in_polygons"
+      ],
+      "referencia": {
+        "herramienta": "count_points_in_polygons",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Accidentes_de_Tránsito/FeatureServer/0",
+          "polygons_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "polygon_name": "Iñaquito"
+        },
+        "clave": "ranking.0.conteo"
+      }
+    },
+    {
+      "id": "acc-03",
+      "mapa": "acc",
+      "categoria": "espacial_conteo",
+      "pregunta": "¿En cuántas parroquias se registró al menos un accidente de tránsito?",
+      "webmap_id": "802a5727dc3e4d85922e1774483261ae",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_in_polygons"
+      ],
+      "referencia": {
+        "herramienta": "count_points_in_polygons",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Accidentes_de_Tránsito/FeatureServer/0",
+          "polygons_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2"
+        },
+        "clave": "poligonos_con_puntos"
+      }
+    },
+    {
+      "id": "acc-04",
+      "mapa": "acc",
+      "categoria": "conteo",
+      "pregunta": "¿Cuántos accidentes de tránsito hay registrados?",
+      "webmap_id": "802a5727dc3e4d85922e1774483261ae",
+      "referencia": {
+        "herramienta": "count_features",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Accidentes_de_Tránsito/FeatureServer/0"
+        },
+        "clave": "total"
+      }
+    },
+    {
+      "id": "acc-05",
+      "mapa": "acc",
+      "categoria": "distribucion",
+      "pregunta": "¿Cuál es el tipo de accidente más frecuente?",
+      "webmap_id": "802a5727dc3e4d85922e1774483261ae",
+      "agente_esperado": "AnalyticsAgent",
+      "herramientas_esperadas": [
+        "count_by_category"
+      ],
+      "referencia": {
+        "herramienta": "count_by_category",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Accidentes_de_Tránsito/FeatureServer/0",
+          "field_name": "TIPO_DE_SINIESTRO"
+        },
+        "clave": "categorias.0.categoria"
+      }
+    },
+    {
+      "id": "acc-06",
+      "mapa": "acc",
+      "categoria": "mapa",
+      "pregunta": "¿De qué trata este mapa y qué capas contiene?",
+      "webmap_id": "802a5727dc3e4d85922e1774483261ae",
+      "agente_esperado": "RAGAgent",
+      "respuesta_contiene": [
+        "Accidentes",
+        "Parroquias"
+      ]
+    },
+    {
+      "id": "acc-07",
+      "mapa": "acc",
+      "categoria": "distribucion",
+      "pregunta": "¿Cuál es la causa probable más frecuente de los accidentes de tránsito?",
+      "webmap_id": "802a5727dc3e4d85922e1774483261ae",
+      "agente_esperado": "AnalyticsAgent",
+      "herramientas_esperadas": [
+        "count_by_category"
+      ],
+      "referencia": {
+        "herramienta": "count_by_category",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Accidentes_de_Tránsito/FeatureServer/0",
+          "field_name": "CAUSA_PROBABLE"
+        },
+        "clave": "categorias.0.categoria"
+      }
+    },
+    {
+      "id": "acc-08",
+      "mapa": "acc",
+      "categoria": "estadistica",
+      "pregunta": "¿Cuántas personas fallecieron en total en los accidentes de tránsito registrados?",
+      "webmap_id": "802a5727dc3e4d85922e1774483261ae",
+      "agente_esperado": "AnalyticsAgent",
+      "herramientas_esperadas": [
+        "field_statistics"
+      ],
+      "referencia": {
+        "herramienta": "field_statistics",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Accidentes_de_Tránsito/FeatureServer/0",
+          "field_name": "FALLECIDOS"
+        },
+        "clave": "suma"
+      }
+    },
+    {
+      "id": "acc-09",
+      "mapa": "acc",
+      "categoria": "espacial_conteo",
+      "pregunta": "¿Qué parroquia tiene más accidentes de tránsito con fallecidos?",
+      "webmap_id": "802a5727dc3e4d85922e1774483261ae",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_in_polygons"
+      ],
+      "referencia": {
+        "herramienta": "count_points_in_polygons",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Accidentes_de_Tránsito/FeatureServer/0",
+          "polygons_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "points_where": "FALLECIDOS > 0"
+        },
+        "clave": "ranking.0.nombre"
+      }
+    },
+    {
+      "id": "acc-10",
+      "mapa": "acc",
+      "categoria": "espacial_conteo",
+      "pregunta": "¿En qué parroquia hay más accidentes en los que participó una motocicleta?",
+      "webmap_id": "802a5727dc3e4d85922e1774483261ae",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_in_polygons"
+      ],
+      "referencia": {
+        "herramienta": "count_points_in_polygons",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Accidentes_de_Tránsito/FeatureServer/0",
+          "polygons_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "points_where": "MOTOCICLETA > 0"
+        },
+        "clave": "ranking.0.nombre"
+      }
+    },
+    {
+      "id": "rie-01",
+      "mapa": "rie",
+      "categoria": "espacial_overlay",
+      "pregunta": "¿Cuántas parroquias del DMQ están expuestas a alguna amenaza volcánica?",
+      "webmap_id": "4cc77cc35b584eadbb13de9de65ea987",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "overlay_polygons"
+      ],
+      "referencia": {
+        "herramienta": "overlay_polygons",
+        "args": {
+          "target_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "overlay_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Amenaza_Volcánica/FeatureServer/0"
+        },
+        "clave": "poligonos_afectados"
+      }
+    },
+    {
+      "id": "rie-02",
+      "mapa": "rie",
+      "categoria": "espacial_overlay",
+      "pregunta": "¿Qué parroquia tiene el mayor porcentaje de su territorio en zona de amenaza volcánica?",
+      "webmap_id": "4cc77cc35b584eadbb13de9de65ea987",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "overlay_polygons"
+      ],
+      "referencia": {
+        "herramienta": "overlay_polygons",
+        "args": {
+          "target_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "overlay_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Amenaza_Volcánica/FeatureServer/0"
+        },
+        "clave": "resultado.0.nombre"
+      }
+    },
+    {
+      "id": "rie-03",
+      "mapa": "rie",
+      "categoria": "espacial_overlay",
+      "pregunta": "¿Qué parroquia es la más expuesta a las amenazas del volcán Pichincha?",
+      "webmap_id": "4cc77cc35b584eadbb13de9de65ea987",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "overlay_polygons"
+      ],
+      "referencia": {
+        "herramienta": "overlay_polygons",
+        "args": {
+          "target_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "overlay_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Amenaza_Volcánica/FeatureServer/0",
+          "overlay_name": "Pichincha"
+        },
+        "clave": "resultado.0.nombre"
+      }
+    },
+    {
+      "id": "rie-04",
+      "mapa": "rie",
+      "categoria": "espacial_overlay",
+      "pregunta": "¿Cuántas parroquias del DMQ pueden verse afectadas por el volcán Cotopaxi?",
+      "webmap_id": "4cc77cc35b584eadbb13de9de65ea987",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "overlay_polygons"
+      ],
+      "referencia": {
+        "herramienta": "overlay_polygons",
+        "args": {
+          "target_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "overlay_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Amenaza_Volcánica/FeatureServer/0",
+          "overlay_name": "Cotopaxi"
+        },
+        "clave": "poligonos_afectados"
+      }
+    },
+    {
+      "id": "rie-05",
+      "mapa": "rie",
+      "categoria": "espacial_ubicar",
+      "pregunta": "¿En qué parroquia está el parque La Carolina?",
+      "webmap_id": "4cc77cc35b584eadbb13de9de65ea987",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "geocode_place",
+        "locate_point"
+      ],
+      "referencia": {
+        "herramienta": "locate_point",
+        "args": {
+          "polygons_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2",
+          "lon": -78.4847,
+          "lat": -0.1824
+        },
+        "clave": "dentro_de.0"
+      }
+    },
+    {
+      "id": "rie-06",
+      "mapa": "rie",
+      "categoria": "conteo",
+      "pregunta": "¿Cuántas parroquias tiene el Distrito Metropolitano de Quito?",
+      "webmap_id": "4cc77cc35b584eadbb13de9de65ea987",
+      "referencia": {
+        "herramienta": "count_features",
+        "args": {
+          "layer_url": "https://services1.arcgis.com/UOl0yzPDLol8nS3m/arcgis/rest/services/Parroquias_DMQ/FeatureServer/2"
+        },
+        "clave": "total"
+      }
+    },
+    {
+      "id": "rie-07",
+      "mapa": "rie",
+      "categoria": "distribucion",
+      "pregunta": "¿Qué volcanes aparecen en la capa de amenaza volcánica y cuántas zonas tiene cada uno?",
+      "webmap_id": "4cc77cc35b584eadbb13de9de65ea987",
+      "agente_esperado": "AnalyticsAgent",
+      "herramientas_esperadas": [
+        "count_by_category"
+      ],
+      "referencia": {
+        "herramienta": "count_by_category",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Amenaza_Volcánica/FeatureServer/0",
+          "field_name": "Nombre del volcán"
+        },
+        "clave": "categorias.0.categoria"
+      }
+    },
+    {
+      "id": "rie-08",
+      "mapa": "rie",
+      "categoria": "mapa",
+      "pregunta": "¿Qué información muestra el mapa de riesgos?",
+      "webmap_id": "4cc77cc35b584eadbb13de9de65ea987",
+      "agente_esperado": "RAGAgent",
+      "respuesta_contiene": [
+        "Amenaza"
+      ]
+    },
+    {
+      "id": "par-01",
+      "mapa": "par",
+      "categoria": "espacial_overlay",
+      "pregunta": "¿Qué provincia ocupa la mayor parte del Parque Nacional Yasuní?",
+      "webmap_id": "93751f81ceeb417ab1aec9a431e30a11",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "overlay_polygons"
+      ],
+      "referencia": {
+        "herramienta": "overlay_polygons",
+        "args": {
+          "target_url": "https://services7.arcgis.com/iFGeGXTAJXnjq0YN/arcgis/rest/services/Provincias_del_Ecuador/FeatureServer/0",
+          "overlay_url": "https://services3.arcgis.com/dlXCaGL4ItoCQfIF/arcgis/rest/services/Áreas_Protegidas_Ecuador_SNAP/FeatureServer/44",
+          "overlay_name": "Yasuní",
+          "order_by": "area"
+        },
+        "clave": "resultado.0.nombre"
+      }
+    },
+    {
+      "id": "par-02",
+      "mapa": "par",
+      "categoria": "espacial_overlay",
+      "pregunta": "¿Qué provincia contiene la mayor parte del Parque Nacional Cotopaxi?",
+      "webmap_id": "93751f81ceeb417ab1aec9a431e30a11",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "overlay_polygons"
+      ],
+      "referencia": {
+        "herramienta": "overlay_polygons",
+        "args": {
+          "target_url": "https://services7.arcgis.com/iFGeGXTAJXnjq0YN/arcgis/rest/services/Provincias_del_Ecuador/FeatureServer/0",
+          "overlay_url": "https://services3.arcgis.com/dlXCaGL4ItoCQfIF/arcgis/rest/services/Áreas_Protegidas_Ecuador_SNAP/FeatureServer/44",
+          "overlay_name": "Cotopaxi",
+          "order_by": "area"
+        },
+        "clave": "resultado.0.nombre"
+      }
+    },
+    {
+      "id": "par-03",
+      "mapa": "par",
+      "categoria": "espacial_overlay",
+      "pregunta": "¿Cuántas áreas protegidas tocan la provincia de Pichincha?",
+      "webmap_id": "93751f81ceeb417ab1aec9a431e30a11",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "overlay_polygons"
+      ],
+      "referencia": {
+        "herramienta": "overlay_polygons",
+        "args": {
+          "target_url": "https://services3.arcgis.com/dlXCaGL4ItoCQfIF/arcgis/rest/services/Áreas_Protegidas_Ecuador_SNAP/FeatureServer/44",
+          "overlay_url": "https://services7.arcgis.com/iFGeGXTAJXnjq0YN/arcgis/rest/services/Provincias_del_Ecuador/FeatureServer/0",
+          "overlay_name": "Pichincha"
+        },
+        "clave": "poligonos_afectados"
+      }
+    },
+    {
+      "id": "par-04",
+      "mapa": "par",
+      "categoria": "espacial_overlay",
+      "pregunta": "¿Qué provincia tiene el mayor porcentaje de su territorio protegido?",
+      "webmap_id": "93751f81ceeb417ab1aec9a431e30a11",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "overlay_polygons"
+      ],
+      "referencia": {
+        "herramienta": "overlay_polygons",
+        "args": {
+          "target_url": "https://services7.arcgis.com/iFGeGXTAJXnjq0YN/arcgis/rest/services/Provincias_del_Ecuador/FeatureServer/0",
+          "overlay_url": "https://services3.arcgis.com/dlXCaGL4ItoCQfIF/arcgis/rest/services/Áreas_Protegidas_Ecuador_SNAP/FeatureServer/44"
+        },
+        "clave": "resultado.0.nombre"
+      }
+    },
+    {
+      "id": "par-05",
+      "mapa": "par",
+      "categoria": "espacial_cercania",
+      "pregunta": "¿Qué área protegida está más cerca de Quito?",
+      "webmap_id": "93751f81ceeb417ab1aec9a431e30a11",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "geocode_place",
+        "nearest_features"
+      ],
+      "referencia": {
+        "herramienta": "nearest_features",
+        "args": {
+          "target_url": "https://services3.arcgis.com/dlXCaGL4ItoCQfIF/arcgis/rest/services/Áreas_Protegidas_Ecuador_SNAP/FeatureServer/44",
+          "n": 1,
+          "_geocodificar": "Quito"
+        },
+        "clave": "resultado.0.nombre"
+      }
+    },
+    {
+      "id": "par-06",
+      "mapa": "par",
+      "categoria": "espacial_cercania",
+      "pregunta": "¿Cuántas áreas protegidas hay a menos de 50 km de Quito?",
+      "webmap_id": "93751f81ceeb417ab1aec9a431e30a11",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "geocode_place",
+        "nearest_features"
+      ],
+      "referencia": {
+        "herramienta": "nearest_features",
+        "args": {
+          "target_url": "https://services3.arcgis.com/dlXCaGL4ItoCQfIF/arcgis/rest/services/Áreas_Protegidas_Ecuador_SNAP/FeatureServer/44",
+          "max_km": 50,
+          "_geocodificar": "Quito"
+        },
+        "clave": "total"
+      }
+    },
+    {
+      "id": "par-07",
+      "mapa": "par",
+      "categoria": "ranking",
+      "pregunta": "¿Cuál es el área protegida más grande del Ecuador?",
+      "webmap_id": "93751f81ceeb417ab1aec9a431e30a11",
+      "agente_esperado": "AnalyticsAgent",
+      "herramientas_esperadas": [
+        "top_n_features"
+      ],
+      "referencia": {
+        "herramienta": "top_n_features",
+        "args": {
+          "layer_url": "https://services3.arcgis.com/dlXCaGL4ItoCQfIF/arcgis/rest/services/Áreas_Protegidas_Ecuador_SNAP/FeatureServer/44",
+          "field_name": "Área_oficial__Ha_",
+          "n": 1
+        },
+        "clave": "registros.0.Nombre"
+      }
+    },
+    {
+      "id": "par-08",
+      "mapa": "par",
+      "categoria": "conteo",
+      "pregunta": "¿Cuántas áreas protegidas tiene el Ecuador?",
+      "webmap_id": "93751f81ceeb417ab1aec9a431e30a11",
+      "referencia": {
+        "herramienta": "count_features",
+        "args": {
+          "layer_url": "https://services3.arcgis.com/dlXCaGL4ItoCQfIF/arcgis/rest/services/Áreas_Protegidas_Ecuador_SNAP/FeatureServer/44"
+        },
+        "clave": "total"
+      }
+    },
+    {
+      "id": "par-09",
+      "mapa": "par",
+      "categoria": "mapa",
+      "pregunta": "¿Qué capas tiene el mapa de parques nacionales?",
+      "webmap_id": "93751f81ceeb417ab1aec9a431e30a11",
+      "agente_esperado": "RAGAgent",
+      "respuesta_contiene": [
+        "Provincias",
+        "protegidas"
+      ]
+    },
+    {
+      "id": "multi-01",
+      "mapa": null,
+      "categoria": "espacial_cercania",
+      "pregunta": "¿Cuántos reportes ciudadanos de seguridad hay a menos de 500 metros de un accidente de tránsito?",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_near"
+      ],
+      "referencia": {
+        "herramienta": "count_points_near",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/service_ef0c0ccbb59144dcb9c607ef4f11c8ec/FeatureServer/0",
+          "reference_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Accidentes_de_Tránsito/FeatureServer/0",
+          "distance_m": 500,
+          "points_where": "categoria = 'seguridad'"
+        },
+        "clave": "puntos_cerca"
+      }
+    },
+    {
+      "id": "multi-02",
+      "mapa": null,
+      "categoria": "espacial_cercania",
+      "pregunta": "¿Cuántas denuncias ciudadanas se hicieron a menos de 300 metros de un accidente de tránsito?",
+      "agente_esperado": "SpatialAgent",
+      "herramientas_esperadas": [
+        "count_points_near"
+      ],
+      "referencia": {
+        "herramienta": "count_points_near",
+        "args": {
+          "points_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/service_ef0c0ccbb59144dcb9c607ef4f11c8ec/FeatureServer/0",
+          "reference_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/Accidentes_de_Tránsito/FeatureServer/0",
+          "distance_m": 300,
+          "points_where": "intencion_bert = 'denuncia'"
+        },
+        "clave": "puntos_cerca"
+      }
+    }
+  ]
+}

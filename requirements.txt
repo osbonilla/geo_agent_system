@@ -1,0 +1,43 @@
+# ── LLM & Agentes ─────────────────────────────────────────
+langchain==0.3.25
+langchain-core==0.3.63
+langchain-community==0.3.24
+langgraph==0.4.7
+# Sin estos pines pip trae langgraph-checkpoint 4.x, que es incompatible con
+# langchain-core 0.3 y rompe `from langgraph.graph import StateGraph`.
+langgraph-checkpoint>=2.0.26,<3.0
+langgraph-prebuilt>=0.2.0,<0.3
+
+# ── Proveedores de LLM ────────────────────────────────────
+langchain-nvidia-ai-endpoints==0.3.10   # NVIDIA NIM — build.nvidia.com
+langchain-openai==0.3.18                # OpenAI y endpoints compatibles (VPN)
+langchain-groq==0.2.4                   # Groq
+langchain-ollama==0.2.3                 # Ollama local
+
+# ── Vectorización de WebMaps ──────────────────────────────
+chromadb==0.5.23
+
+# ── ArcGIS ────────────────────────────────────────────────
+arcgis==2.4.3
+requests==2.32.3
+
+# ── Base de datos ─────────────────────────────────────────
+psycopg2-binary==2.9.10
+sqlalchemy==2.0.41
+geoalchemy2==0.17.1
+
+# ── Geometrías ────────────────────────────────────────────
+shapely==2.1.0
+
+# ── API ───────────────────────────────────────────────────
+fastapi==0.115.12
+uvicorn[standard]==0.34.2
+
+# ── Utilidades ────────────────────────────────────────────
+python-dotenv==1.1.0
+pydantic==2.11.5
+pydantic-settings==2.9.1
+httpx==0.28.1
+
+# ── Tests ─────────────────────────────────────────────────
+pytest==8.3.5

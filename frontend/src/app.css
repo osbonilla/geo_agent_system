@@ -1,0 +1,25 @@
+/*
+ * Estilos base. Todo lo visual lo resuelve Calcite: colores, tipografía,
+ * espaciados y modo claro/oscuro salen de sus variables --calcite-*.
+ */
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--calcite-font-family, 'Avenir Next', 'Segoe UI', system-ui, sans-serif);
+  background: var(--calcite-color-background);
+  color: var(--calcite-color-text-1);
+}
+
+.mono {
+  font-family: var(--calcite-code-family, ui-monospace, 'SFMono-Regular', Consolas, monospace);
+}
+
+/* Componentes que todavía no se registraron: evita el parpadeo inicial */
+:not(:defined) {
+  visibility: hidden;
+}

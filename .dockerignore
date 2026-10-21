@@ -1,0 +1,30 @@
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Secretos y datos locales
+.env
+chroma_data/
+*.sqlite3
+
+# Frontend (tiene su propio build)
+frontend/node_modules/
+frontend/dist/
+frontend/.svelte-kit/
+
+# Repo y documentación pesada
+.git/
+.github/
+imgs/
+*.md
+!README.md
+
+venv_ml/
+salida_reportes/
+ml/intencion/resultados/
+ml/intencion/datos/

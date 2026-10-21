@@ -1,0 +1,159 @@
+{
+  "_instrucciones": [
+    "Copiá este archivo a eval/preguntas.json y ampliálo a 30-50 preguntas.",
+    "'referencia' calcula la respuesta correcta EN VIVO llamando a la herramienta; 'clave' es la ruta dentro del JSON (ej. categorias.0.conteo).",
+    "'respuesta_contiene' es la alternativa a mano: textos o números que deben aparecer en la respuesta.",
+    "Las preguntas con 'REEMPLAZAR' se saltean hasta que completes el dato.",
+    "Variá la redacción: preguntas directas, coloquiales y con nombres de campo distintos (alias)."
+  ],
+  "preguntas": [
+    {
+      "id": "est-01",
+      "categoria": "estadistica",
+      "pregunta": "¿Cuál es la altura máxima registrada en la encuesta de arbolado?",
+      "agente_esperado": "AnalyticsAgent",
+      "herramientas_esperadas": [
+        "field_statistics"
+      ],
+      "referencia": {
+        "herramienta": "field_statistics",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/survey123_229156bed8894099980291845f5aea37_results/FeatureServer/0",
+          "field_name": "_3_altura_total"
+        },
+        "clave": "maximo"
+      }
+    },
+    {
+      "id": "est-02",
+      "categoria": "estadistica",
+      "pregunta": "¿Cuál es la altura promedio de los árboles de la encuesta de arbolado?",
+      "agente_esperado": "AnalyticsAgent",
+      "herramientas_esperadas": [
+        "field_statistics"
+      ],
+      "referencia": {
+        "herramienta": "field_statistics",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/survey123_229156bed8894099980291845f5aea37_results/FeatureServer/0",
+          "field_name": "_3_altura_total"
+        },
+        "clave": "promedio"
+      }
+    },
+    {
+      "id": "cnt-01",
+      "categoria": "conteo",
+      "pregunta": "¿Cuántos registros tiene la capa de la encuesta de arbolado?",
+      "referencia": {
+        "herramienta": "count_features",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/survey123_229156bed8894099980291845f5aea37_results/FeatureServer/0"
+        },
+        "clave": "total"
+      }
+    },
+    {
+      "id": "rank-01",
+      "categoria": "ranking",
+      "pregunta": "¿Cuáles son los 3 árboles más altos de la encuesta de arbolado y qué altura tienen?",
+      "agente_esperado": "AnalyticsAgent",
+      "herramientas_esperadas": [
+        "top_n_features"
+      ],
+      "referencia": {
+        "herramienta": "top_n_features",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/survey123_229156bed8894099980291845f5aea37_results/FeatureServer/0",
+          "field_name": "_3_altura_total",
+          "n": 3
+        },
+        "clave": "registros.0._3_altura_total"
+      }
+    },
+    {
+      "id": "dist-01",
+      "categoria": "distribucion",
+      "pregunta": "¿Cuál es la especie más común en la encuesta de arbolado?",
+      "agente_esperado": "AnalyticsAgent",
+      "herramientas_esperadas": [
+        "count_by_category"
+      ],
+      "referencia": {
+        "herramienta": "count_by_category",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/survey123_229156bed8894099980291845f5aea37_results/FeatureServer/0",
+          "field_name": "field_7"
+        },
+        "clave": "categorias.0.categoria"
+      }
+    },
+    {
+      "id": "dist-02",
+      "categoria": "distribucion",
+      "pregunta": "¿Cuántas especies distintas hay en la encuesta de arbolado?",
+      "agente_esperado": "AnalyticsAgent",
+      "herramientas_esperadas": [
+        "count_by_category"
+      ],
+      "referencia": {
+        "herramienta": "count_by_category",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/survey123_229156bed8894099980291845f5aea37_results/FeatureServer/0",
+          "field_name": "field_7"
+        },
+        "clave": "total_categorias"
+      }
+    },
+    {
+      "id": "multi-01",
+      "categoria": "multi_paso",
+      "pregunta": "Busca la capa de la encuesta de arbolado y dime cuántos ejemplares hay de la especie más común",
+      "referencia": {
+        "herramienta": "count_by_category",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/survey123_229156bed8894099980291845f5aea37_results/FeatureServer/0",
+          "field_name": "field_7"
+        },
+        "clave": "categorias.0.conteo"
+      }
+    },
+    {
+      "id": "esp-01",
+      "categoria": "espacial",
+      "pregunta": "¿Cuántos árboles de la encuesta de arbolado hay a menos de 500 metros del punto lon -78.4678, lat -0.1807?",
+      "_nota": "Cambiá el punto por uno donde haya árboles; si no, la respuesta correcta es 0",
+      "agente_esperado": "GeoAgent",
+      "herramientas_esperadas": [
+        "query_features_near"
+      ],
+      "referencia": {
+        "herramienta": "query_features_near",
+        "args": {
+          "layer_url": "https://services2.arcgis.com/kHvSRXWQHCjXtMkT/arcgis/rest/services/survey123_229156bed8894099980291845f5aea37_results/FeatureServer/0",
+          "lon": -78.4678,
+          "lat": -0.1807,
+          "distance_m": 500
+        },
+        "clave": "total_en_radio"
+      }
+    },
+    {
+      "id": "busq-01",
+      "categoria": "busqueda",
+      "pregunta": "¿Qué capas tengo relacionadas con árboles o arbolado?",
+      "agente_esperado": "GeoAgent",
+      "herramientas_esperadas": [
+        "search_layers"
+      ]
+    },
+    {
+      "id": "rag-01",
+      "categoria": "mapa",
+      "pregunta": "¿Qué capas tiene este mapa?",
+      "webmap_id": "REEMPLAZAR_CON_ID_DE_UN_WEBMAP_VECTORIZADO",
+      "agente_esperado": "RAGAgent",
+      "respuesta_contiene": []
+    }
+  ]
+}

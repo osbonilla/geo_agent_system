@@ -1,0 +1,125 @@
+# ══════════════════════════════════════════════════════════
+#  GeoAgent System — stack completo
+#
+#    docker compose up -d --build      levantar todo
+#    docker compose logs -f api        ver el backend
+#    docker compose down               apagar
+#    docker compose down -v            apagar y borrar datos
+#
+#  Con Ollama local en vez de una API remota:
+#    docker compose --profile local-llm up -d
+# ══════════════════════════════════════════════════════════
+
+name: geo-agent-system
+
+services:
+
+  # ── PostgreSQL + PostGIS ────────────────────────────────
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: geo_agents_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-geo_agents_db}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-geo_agents_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks: [geonet]
+
+  # ── ChromaDB — índice vectorial de los WebMaps ──────────
+  chroma:
+    image: chromadb/chroma:0.5.23
+    container_name: geo_agents_chroma
+    restart: unless-stopped
+    environment:
+      IS_PERSISTENT: "TRUE"
+      ANONYMIZED_TELEMETRY: "FALSE"
+    ports:
+      - "${CHROMA_PORT:-8001}:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/api/v1/heartbeat || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    networks: [geonet]
+
+  # ── Backend FastAPI ─────────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: geo_agents_api
+    restart: unless-stopped
+    env_file: [.env]
+    environment:
+      # Dentro de la red de compose los hosts son los nombres de servicio
+      DB_HOST: postgres
+      DB_PORT: 5432
+      CHROMA_HOST: chroma
+      CHROMA_PORT: 8000
+      # Dentro del contenedor "localhost" es el propio contenedor, no tu PC.
+      # Por eso NO se reutiliza OLLAMA_BASE_URL del .env (que suele ser
+      # localhost para correr sin Docker): se usa OLLAMA_DOCKER_URL.
+      # Con el perfil local-llm: OLLAMA_DOCKER_URL=http://ollama:11434
+      OLLAMA_BASE_URL: ${OLLAMA_DOCKER_URL:-http://host.docker.internal:11434}
+    ports:
+      - "${API_PORT:-8000}:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      chroma:
+        condition: service_started
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks: [geonet]
+
+  # ── Frontend Svelte servido con Bun ─────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        ARCGIS_JS_VERSION: ${ARCGIS_JS_VERSION:-4.34}
+    container_name: geo_agents_web
+    restart: unless-stopped
+    environment:
+      # El servidor Bun proxea /api hacia el backend: sin CORS, sin URLs quemadas
+      API_URL: http://api:8000
+      PORT: 5173
+    ports:
+      - "${FRONTEND_PORT:-5173}:5173"
+    depends_on:
+      - api
+    networks: [geonet]
+
+  # ── Ollama opcional (perfil local-llm) ──────────────────
+  ollama:
+    image: ollama/ollama:latest
+    container_name: geo_agents_ollama
+    profiles: ["local-llm"]
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks: [geonet]
+
+volumes:
+  postgres_data:
+  chroma_data:
+  ollama_data:
+
+networks:
+  geonet:
+    driver: bridge

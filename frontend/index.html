@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GeoAgent</title>
+    <meta name="description" content="Consultas en lenguaje natural sobre WebMaps de ArcGIS Online" />
+
+    <!--
+      Calcite Design System (Esri). La versión debe coincidir con la del SDK de
+      mapas (ver developers.arcgis.com/javascript/latest/version-matrix):
+        SDK 4.34  →  Calcite 3.3.2
+      Si cambiás ARCGIS_JS_VERSION, cambiá también esta versión.
+    -->
+    <script type="module" src="https://js.arcgis.com/calcite-components/3.3.2/calcite.esm.js"></script>
+    <link rel="stylesheet" href="https://js.arcgis.com/calcite-components/3.3.2/calcite.css" />
+  </head>
+  <body class="calcite-mode-dark">
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

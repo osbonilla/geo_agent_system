@@ -1,0 +1,62 @@
+# ── Credenciales y secretos (NUNCA subir al repo) ──────────
+.env
+*.key
+*.pem
+
+# ── Entorno virtual Python ─────────────────────────────────
+venv/
+.venv/
+env/
+ENV/
+venv_ml/
+
+# ── Python cache ───────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# ── Pytest / testing ───────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ── IDEs ───────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Docker (datos persistentes) ────────────────────────────
+postgres_data/
+
+# ── OS ─────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Logs ───────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Distribución Python ────────────────────────────────────
+dist/
+build/
+*.egg-info/
+# ── Índice vectorial local ─────────────────────────────────
+chroma_data/
+
+# ── Frontend (Bun + Svelte) ────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.svelte-kit/
+
+# ── Evaluación y tests ─────────────────────────────────────
+eval/resultados/
+eval/preguntas.json
+.chroma_test/
+
+
+*.zip
+salida_reportes/
+ml/
