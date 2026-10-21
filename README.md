@@ -2,7 +2,7 @@
      <img src="imgs/arquitectura_sistema.png" alt="Arquitectura del sistema multi-agente geoespacial" width="900">
 </p>
 
-# GeoAgent System
+# Sistema Multi-Agente Geoespacial
 
 **Arquitectura multi-agente geoespacial: planificación jerárquica con Small Language Models (SLMs) para la automatización de análisis espacial en ArcGIS**
 
